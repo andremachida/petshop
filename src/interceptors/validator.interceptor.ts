@@ -15,7 +15,10 @@ import { Result } from '../backoffice/models/result.model';
 export class ValidatorInterceptor implements NestInterceptor {
   constructor(public contract: Contract) {}
 
-  intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<any> {
+  intercept(
+    context: ExecutionContext,
+    next: CallHandler<any>,
+  ): Observable<any> | Promise<any> {
     const body = context.switchToHttp().getRequest().body;
     const valid = this.contract.validate(body);
 
