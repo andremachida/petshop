@@ -13,11 +13,13 @@ import {
 import { Customer } from '../models/customer.model';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../interceptors/validator.interceptor';
-import { CreateCustomerContract } from '../contracts/customer.contract';
+import { CreateCustomerContract } from '../contracts/customer/create-customer.contract';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/user.model';
 import { CustomerService } from '../services/customer.service';
+import { CreateAddressContract } from '../contracts/customer/create-address.contract';
+import { Address } from '../models/address.model';
 
 @Controller('v1/customers')
 export class CustomerController {
@@ -61,6 +63,23 @@ export class CustomerController {
     } catch (error) {
       throw new HttpException(
         new Result('Unable to create customer', false, null, error),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Post(':document/addresses/billing')
+  @UseInterceptors(new ValidatorInterceptor(new CreateAddressContract()))
+  async addBillingAddress(
+    @Param('document') document: string,
+    @Body() model: Address,
+  ) {
+    try {
+      await this.customerService.addBillingAddress(document, model);
+      return model;
+    } catch (error) {
+      throw new HttpException(
+        new Result('Unable to create address', false, null, error),
         HttpStatus.BAD_REQUEST,
       );
     }
