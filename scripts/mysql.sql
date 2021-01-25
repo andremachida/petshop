@@ -4,16 +4,16 @@
 -- ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mysql'
 
 -- Remove o Schema
-DROP SCHEMA `7180`;
+DROP SCHEMA `petshop`;
 
 -- Cria o Schema
-CREATE SCHEMA `7180`;
+CREATE SCHEMA `petshop`;
 
 -- Usa o Schema
-USE `7180`;
+USE `petshop`;
 
 -- Produtos
-CREATE TABLE `7180`.`product` (
+CREATE TABLE `petshop`.`product` (
   `id` INT NOT NULL,
   `title` VARCHAR(80) NOT NULL,
   `description` TEXT(4000) NOT NULL,
@@ -22,13 +22,13 @@ CREATE TABLE `7180`.`product` (
   PRIMARY KEY (`id`));
   
 -- Pedidos
-CREATE TABLE `7180`.`order` (
+CREATE TABLE `petshop`.`order` (
   `id` INT NOT NULL,
   `date` DATETIME NOT NULL DEFAULT NOW(),
   PRIMARY KEY (`id`));
   
 -- Itens do Pedidos
-CREATE TABLE `7180`.`orderitem` (
+CREATE TABLE `petshop`.`orderitem` (
   `id` INT NOT NULL,
   `quantity` INT NOT NULL,
   `productid` INT NOT NULL,
