@@ -24,6 +24,7 @@ import { UpdateCustomerDto } from '../dtos/customer/update-customer.dto';
 import { CreateCreditCardContract } from '../contracts/customer/create-credit-card.contract';
 import { CreditCard } from '../models/credit-card.model';
 import { QueryContract } from '../contracts/query.contract';
+import { Md5 } from 'md5-typescript';
 
 @Controller('v1/customers')
 export class CustomerController {
@@ -55,8 +56,9 @@ export class CustomerController {
   @UseInterceptors(new ValidatorInterceptor(new CreateCustomerContract()))
   async post(@Body() model: CreateCustomerDto) {
     try {
+      const password = Md5.init(`${model.password}${process.env.SALT_KEY}`);
       const user = await this.accountService.create(
-        new User(model.document, model.password, true),
+        new User(model.document, password, true, ['user']),
       );
 
       const customer = new Customer(
