@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { BackofficeModule } from './modules/backoffice/backoffice.module';
 import { StoreModule } from './modules/store/store.module';
+import { ScheduleModule } from './modules/schedule/schedule.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { StoreModule } from './modules/store/store.module';
     }),
     BackofficeModule,
     StoreModule,
+    ScheduleModule,
   ],
   controllers: [],
   providers: [],

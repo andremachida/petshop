@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   HttpException,
   HttpStatus,
+  CacheInterceptor,
 } from '@nestjs/common';
 import { Customer } from '../models/customer.model';
 import { Result } from '../models/result.model';
@@ -34,6 +35,7 @@ export class CustomerController {
   ) {}
 
   @Get()
+  @UseInterceptors(CacheInterceptor)
   async getAll() {
     const customers = await this.customerService.findAll();
     return new Result('Customer list', true, customers, null);

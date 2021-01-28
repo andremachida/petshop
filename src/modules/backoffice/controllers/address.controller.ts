@@ -6,6 +6,7 @@ import {
   UseInterceptors,
   HttpException,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { Result } from '../models/result.model';
 import { ValidatorInterceptor } from '../../../interceptors/validator.interceptor';
@@ -47,6 +48,21 @@ export class AddressController {
     } catch (error) {
       throw new HttpException(
         new Result('Unable to create shipping address', false, null, error),
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
+  @Get('search/:zipcode')
+  async search(@Param('zipcode') zipcode) {
+    try {
+      const response = await this.service
+        .getAddressByZipCode(zipcode)
+        .toPromise();
+      return new Result(null, true, response.data, null);
+    } catch (error) {
+      throw new HttpException(
+        new Result('Unable to find address', false, null, error),
         HttpStatus.BAD_REQUEST,
       );
     }
