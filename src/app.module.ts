@@ -8,6 +8,7 @@ import { StoreModule } from './modules/store/store.module';
 import { ScheduleModule } from './modules/schedule/schedule.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { GraphQLModule } from '@nestjs/graphql';
+import { ChatModule } from './modules/chat/chat.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { GraphQLModule } from '@nestjs/graphql';
     StoreModule,
     ScheduleModule,
     ReportsModule,
+    ChatModule,
   ],
   controllers: [],
   providers: [],
